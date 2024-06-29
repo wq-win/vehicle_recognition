@@ -1,0 +1,99 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'base/vehicle/css/index.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'base/road/js/update.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--更新道路</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:index' %}">vehicle_index</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:update_road' %}">vehicle_update_road</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'vehicle:update_road' %}" method="get">
+
+        <table border="1" class="table table-hover">
+            <tr class="active">
+                <td>道路</td>
+                <td>限制</td>
+                <td>修改</td>
+                <td>删除</td>
+            </tr>
+            {% for road in page_object.object_list %}
+                {#            未删除的显示出来#}
+                {% ifequal road.r_is_delete False %}
+                    <tr>
+                        <td>{{ road.r_name }}</td>
+                        <td>{{ road.r_restriction }}</td>
+                        <td><a href="{% url 'vehicle:save_road' %}?road_id={{ road.id }}">修改</a></td>
+                        <td><a href="{% url 'vehicle:delete_road' %}?road_id={{ road.id }}">删除</a></td>
+                    </tr>
+                {% endifequal %}
+            {% endfor %}
+        </table>
+        <div align="center">
+            <button onclick="javascript:history.go(-1);" type="reset" class="btn btn-default btn-lg">返回</button>
+        </div>
+        {#    分页器#}
+        <div align="center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-lg">
+                    {% if page_object.has_previous %}
+                        <li>
+                            <a href="{% url 'vehicle:index' %}?page={{ page_object.previous_page_number }}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="disabled">
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% for page_index in page_range %}
+                        {% ifequal page_index page_object.number %}
+                            <li class="active"><a
+                                    href="{% url 'vehicle:index' %}?page={{ page_index }}">{{ page_index }}</a>
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'vehicle:index' %}?page={{ page_index }}">{{ page_index }}</a></li>
+                        {% endifequal %}
+                    {% endfor %}
+
+                    {% if page_object.has_next %}
+                        <li>
+                            <a href="{% url 'vehicle:index' %}?page={{ page_object.next_page_number }}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="disabled">
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+    </form>
+{% endblock %}
+

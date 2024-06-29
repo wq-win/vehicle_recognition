@@ -1,0 +1,79 @@
+{% extends 'main/vehicle_index.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'base/vehicle/js/add.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--添加车牌</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:index' %}">vehicle_index</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:add' %}">vehicle_add</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'vehicle:add' %}" method="post" enctype="multipart/form-data">
+        <table border="1" class="table table-hover">
+            {% ifequal method 'GET' %}
+                <tr>
+                    <td><label for="pic_input">上传：</label></td>
+                    <td><input name="pic" type="file" id="pic_input"></td>
+                </tr>
+                <tr>
+                    <td><label for="p_name">车牌：</label></td>
+                    <td><input name="p_name" id="p_name" type="text"><span id="pname_info"></span></td>
+                </tr>
+                <tr>
+                    <td><label>用户名：</label></td>
+                    <td><select name="username" id="username_select">
+                        {% for user in users %}
+                            <option>{{ user.u_username }}</option>
+                        {% endfor %}
+                    </select><span id="username_info"></span></td>
+                </tr>
+                <tr>
+                    <td><label>道路名：</label></td>
+                    <td>
+                        <select name="road" id="road_select">
+                            {% for road in roads %}
+                                <option>{{ road.r_name }} {{ road.r_restriction }}</option>
+                            {% endfor %}
+                        </select>
+                    <span id="restriction_info"></span>
+{#                    # TODO 道路限制提示#}
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="date">通行时间：</label></td>
+                    <td><input name="date" id="date" type="datetime-local"></td>
+                </tr>
+                <tr>
+                    <td><label for="against_input">是否违规：</label></td>
+                    <td>
+                        <label><input name="against" value="T" type="radio">违规</label>
+                        <label><input name="against" value="F" type="radio">未违规</label>
+                    </td>
+                </tr>
+            {% endifequal %}
+        </table>
+        <div align="center">
+            <button type="submit" class="btn btn-danger btn-lg">上传</button>
+            <button onclick="javascript:history.go(-1);" type="reset" class="btn btn-default btn-lg">取消</button>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

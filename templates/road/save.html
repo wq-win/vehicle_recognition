@@ -1,0 +1,47 @@
+{% extends 'main/vehicle_index.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--修改道路</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:index' %}">vehicle_index</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:update_road' %}">vehicle_update_road</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:save_road' %}">save</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'vehicle:save_road' %}" method="post" enctype="multipart/form-data">
+        <table border="1" class="table table-hover">
+            <tr>
+                <td><label for="road_name_input">道路名：</label></td>
+                <td><input type="text" id="road_name_input" name="road_name" placeholder="{{ r_name }}"></td>
+            </tr>
+            <tr>
+                <td><label for="restriction_input">道路限制：</label></td>
+                <td>
+                    <textarea name="restriction" id="restriction_input" cols="30" rows="3"></textarea>
+                </td>
+            </tr>
+        </table>
+        <div align="center">
+            <button type="submit" class="btn btn-danger btn-lg">保存修改</button>
+            <button onclick="javascript:history.go(-1);" type="reset" class="btn btn-default btn-lg">取消</button>
+        </div>
+    </form>
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

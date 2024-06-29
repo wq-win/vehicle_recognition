@@ -1,0 +1,73 @@
+{% extends 'main/vehicle_index.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--查找车牌</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:index' %}">vehicle_index</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:search' %}">search</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+
+    <div align="center">
+        <span>Tip:</span>
+        <label for="search" class="control-label">{{ msg }}</label>
+        <a class="btn btn-default btn-lg" href="{% url 'vehicle:index' %}">返回</a>
+    </div>
+    {% ifequal msg "search success" %}
+        <table border="1" class="table table-hover">
+            <tr class="active">
+                <td>姓名</td>
+                <td>车牌</td>
+                <td>道路</td>
+                <td>道路限制</td>
+                <td>时间</td>
+                <td>是否违规</td>
+                {% ifequal is_super True %}
+                    <td>删除</td>
+                    <td>修改</td>
+                {% endifequal %}
+            </tr>
+
+            {% for plate in page_object.object_list %}
+                {% ifequal plate.p_is_delete False %}
+                    <tr>
+                        <td>{{ plate.p_username.u_username }}</td>
+                        <td>{{ plate.p_plate }}</td>
+                        <td>{{ plate.p_roads.r_name }}</td>
+                        <td>{{ plate.p_roads.r_restriction }}</td>
+                        <td>{{ plate.p_time }}</td>
+                        {% ifequal plate.p_against False %}
+                            <td>未违规</td>
+                        {% else %}
+                            <td>违规</td>
+                        {% endifequal %}
+                        {% ifequal is_super True %}
+                            <td><a href="{% url 'vehicle:delete' %}?plate_id={{ plate.id }}">删除</a></td>
+                            <td><a href="{% url 'vehicle:update' %}?plate_id={{ plate.id }}">修改</a>
+                            </td>
+                        {% endifequal %}
+                    </tr>
+                {% endifequal %}
+            {% endfor %}
+        </table>
+    {% else %}
+        <div align="center">
+            <span>用户名错误，请返回</span>
+        </div>
+    {% endifequal %}
+
+{% endblock %}

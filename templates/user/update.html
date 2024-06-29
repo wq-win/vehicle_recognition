@@ -1,0 +1,65 @@
+{% extends 'main/mine.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'base/user/js/update.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--修改用户信息</p>
+        {% ifequal u_state True %}
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'user:mine_super' %}">mine_super</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'user:search' %}">search</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'user:update' %}">update</a></li>
+        </ul>
+            {% else %}
+            <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'user:mine' %}">mine</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'user:update' %}">update</a></li>
+        </ul>
+        {% endifequal %}
+    </header>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'user:update' %}" method="post" enctype="multipart/form-data" onsubmit="return check()">
+        <table border="1" class="table table-hover">
+            <tr>
+                <td><label for="username_input">用户名：</label></td>
+                <td><input name="username" id="username_input" type="text" placeholder="请输入用户名">
+                    <span id="username_info"></span></td>
+            </tr>
+            <tr>
+                <td><label for="password_input">密码：</label></td>
+                <td><input name="password" id="password_input" type="password" placeholder="不输入维持原密码">
+                    <span id="password_info"></span></td>
+            </tr>
+            <tr>
+                <td><label for="email_input">邮箱：</label></td>
+                <td><input name="email" id="email_input" type="email" placeholder="不输入维持原邮箱">
+                    <span id="email_info"></span></td>
+            </tr>
+            <tr>
+                <td><label for="icon_input">头像</label></td>
+                <td><input name="icon" type="file" id="icon_input"></td>
+            </tr>
+        </table>
+        <div align="center">
+            <button type="submit" class="btn btn-danger btn-lg">保存</button>
+            <button onclick="javascript:history.go(-1);" type="reset" class="btn btn-default btn-lg">取消</button>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

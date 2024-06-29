@@ -1,0 +1,70 @@
+{% extends 'main/mine.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--查找用户</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'user:mine_super' %}">mine_super</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'user:search' %}">search</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div align="center">
+        <span>tip:</span>
+        <label for="search" class="control-label">{{ msg }}</label>
+        <a class="btn btn-default btn-lg" href="{% url 'user:mine_super' %}">返回</a>
+    </div>
+    {% ifequal msg "search success" %}
+        <table border="1" class="table table-hover">
+            <tr class="active">
+                <td>姓名</td>
+                <td>邮箱</td>
+                <td>激活状态</td>
+                <td>是否删除</td>
+                {% ifequal delete False %}
+                <td>删除用户</td>
+                {% else %}
+                    <td>恢复用户</td>
+                {% endifequal %}
+                <td>修改信息</td>
+            </tr>
+
+            <tr>
+                <td>{{ username }}</td>
+                <td>{{ email }}</td>
+                {% ifequal activate False %}
+                    <td><a href="{% url 'user:activate_super' %}?user_id={{ user_id }}">未激活(点击激活)</a></td>
+                {% else %}
+                    <td>已激活</td>
+                {% endifequal %}
+                {% ifequal delete False %}
+                    <td>账号正常</td>
+                    <td><a href="{% url 'user:delete' %}?user_id={{ user_id }}">删除</a></td>
+                {% else %}
+                    <td>账号已删除</td>
+                    <td><a href="{% url 'user:addition' %}?user_id={{ user_id }}">恢复</a></td>
+                {% endifequal %}
+                <td><a href="{% url 'user:update' %}?user_id={{ user_id }}">修改</a></td>
+            </tr>
+        </table>
+    {% else %}
+        <span>用户名错误，请返回</span>
+    {% endifequal %}
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

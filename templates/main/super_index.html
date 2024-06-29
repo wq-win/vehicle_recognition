@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'base/main/css/main.css' %}">
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--首页(管理员)</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'user:home_super' %}">super_index</a></li>
+        </ul>
+    </header>
+{% endblock %}
+{% block content %}
+    <div id="content">
+
+    <div align="center" class="content">
+        <p>南昌大学 软件学院 </p>
+        <p>基于深度学习的车辆识别系统</p>
+        <p>指导老师：饶泓教授</p>
+        <p>学生：王强</p>
+        <p>当前位置：管理员首页</p>
+    </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    {{ block.super }}
+    <footer>
+        <a href="{% url 'user:home_super' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-th-large"></span>
+                </dt>
+                <dd>首页</dd>
+            </dl>
+        </a>
+        <a href="{% url 'vehicle:index' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-road"></span>
+                </dt>
+                <dd>车辆</dd>
+            </dl>
+        </a>
+        <a href="{% url 'user:mine_super' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-home"></span>
+                </dt>
+                <dd>我的</dd>
+            </dl>
+        </a>
+        </dl>
+    </footer>
+{% endblock %}

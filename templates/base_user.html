@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'base/user/css/user.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'js/md5.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--用户管理模块</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'user:mine' %}">mine</a></li>
+        </ul>
+    </header>
+{% endblock %}

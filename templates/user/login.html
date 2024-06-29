@@ -1,0 +1,51 @@
+{% extends 'base_user.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'base/user/css/login.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'base/user/js/login.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--登录</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'user:mine' %}">mine</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'user:login' %}">login</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form method="post" action="{% url 'user:login' %}" onsubmit="parse_data()">
+
+            {% csrf_token %}
+
+            <p>{{ error_message }}</p>
+
+            <div class="form-group">
+                <label for="username_input">用户名：</label>
+                <input name="username" type="text" class="form-control" id="username_input" placeholder="用户名">
+            </div>
+
+            <div class="form-group">
+                <label for="password_input">密码：</label>
+                <input name="password" type="password" class="form-control" id="password_input" placeholder="请输入密码">
+            </div>
+            <div class="form-group">
+                <label for="verify_code_input">验证码：</label>
+                <input name="verify_code" type="text" class="form-control" id="verify_code_input" placeholder="请输入验证码">
+                <img src="{% url 'user:get_code' %}" alt="verify_code">
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">登录</button>
+            <a class="btn btn-default btn-lg" href="{% url 'user:mine_super' %}">返回</a>
+        </form>
+    </div>
+{% endblock %}

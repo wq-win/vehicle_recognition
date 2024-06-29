@@ -1,0 +1,29 @@
+/*底部图标和文字*/
+footer span {
+    /*background: url(/static/img/mine_selected.png) no-repeat;*/
+    background-size: 0.513889rem;
+}
+
+footer dd {
+    color: darkorange;
+}
+/*内容容器*/
+#vehicle {
+    height: 3.5rem;
+    margin: 0.3rem;
+    font: 28px 'Microsoft Yahei', 'Simsun';
+    text-align: center;
+    z-index: +10;
+    background: whitesmoke;
+    overflow: hidden;
+    padding-top: 0.3rem;
+    /*padding-bottom: 0.5rem;*/
+}
+
+.fixed {
+    /*position: fixed;*/
+    height: 2.5rem;
+    background: darkorange;
+    font: 28px 'Microsoft Yahei', 'Simsun';
+    text-align: center;
+}

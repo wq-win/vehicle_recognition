@@ -1,0 +1,54 @@
+{% extends 'base_main.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'base/main/css/mine.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--我的</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'user:mine' %}">mine</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div id="mine">
+        <div class="fixed">
+            <span>
+                {% if is_login %}
+                    <img class="u_icon" src="{{ icon }}" alt="{{ username }}">
+                {% else %}
+                    <span class="glyphicon glyphicon-user"></span>
+                {% endif %}
+            </span>
+            {% if is_login %}
+                <p>欢迎您，{{ username }}!</p>
+                <br>
+                <a href="{% url 'user:update' %}?user_id={{ user_id }}">修改个人信息<span class="glyphicon glyphicon-check"></a>
+            {% else %}
+                <a href="{% url 'user:login' %}"> 登录<span class="glyphicon glyphicon-log-in"></span></a>
+                <br>
+            {% endif %}
+
+            {% if not is_login %}
+                <a href="{% url 'user:register' %}">注册<span class="glyphicon glyphicon-registration-mark"></span></a>
+            {% endif %}
+        </div>
+        <div>
+            {% if is_login %}
+                <p>
+                    <a href="{% url 'user:logout' %}">退出当前账号<span class="glyphicon glyphicon-log-out"></span></a>
+                </p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

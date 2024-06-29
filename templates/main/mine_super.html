@@ -1,0 +1,132 @@
+{% extends 'main/mine.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'base/main/css/mine_super.css' %}">
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'base/main/js/mine_super.js' %}"></script>
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--我的(管理员)</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'user:mine_super' %}">mine_super</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    {{ block.super }}
+    {% if is_login %}
+        <div align="center">
+            <label for="search" class="control-label">查找用户：</label>
+            <input id="search" type="text" placeholder="请输入用户名查找">
+            {#         <a href="{% url 'user:' %}">查找</a>#}
+            <button onclick="search()" class="btn btn-default">查找</button>
+        </div>
+
+        <table border="1" class="table table-hover">
+            <tr class="active">
+                <td>姓名</td>
+                <td>邮箱</td>
+                <td>是否是管理员</td>
+            </tr>
+            {% for user in page_object.object_list %}
+                {#            未删除的显示出来#}
+                {#                {% ifequal user.is_delete False %}#}
+                <tr>
+                    <td>{{ user.u_username }}</td>
+                    <td>{{ user.u_email }}</td>
+                    {% ifequal user.is_super True %}
+                        <td>是</td>
+                    {% else %}
+                        <td>否</td>
+                    {% endifequal %}
+                </tr>
+                {#                {% endifequal %}#}
+            {% endfor %}
+        </table>
+
+        {#    分页器#}
+        <div align="center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-lg">
+                    {% if page_object.has_previous %}
+                        <li>
+                            <a href="{% url 'user:mine_super' %}?page={{ page_object.previous_page_number }}"
+                               aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="disabled">
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {% for page_index in page_range %}
+                        {% ifequal page_index page_object.number %}
+                            <li class="active"><a
+                                    href="{% url 'user:mine_super' %}?page={{ page_index }}">{{ page_index }}</a>
+                            </li>
+                        {% else %}
+                            <li><a href="{% url 'user:mine_super' %}?page={{ page_index }}">{{ page_index }}</a></li>
+                        {% endifequal %}
+                    {% endfor %}
+
+                    {% if page_object.has_next %}
+                        <li>
+                            <a href="{% url 'user:mine_super' %}?page={{ page_object.next_page_number }}"
+                               aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="disabled">
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <a href="{% url 'user:home_super' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-th-large"></span>
+                </dt>
+                <dd>首页</dd>
+            </dl>
+        </a>
+        <a href="{% url 'vehicle:index' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-road"></span>
+                </dt>
+                <dd>车辆</dd>
+            </dl>
+        </a>
+        <a href="{% url 'user:mine_super' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-home"></span>
+                </dt>
+                <dd>管理用户</dd>
+            </dl>
+        </a>
+    </footer>
+{% endblock %}

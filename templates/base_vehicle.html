@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'base/main/css/main.css' %}">
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--车辆首页</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:index' %}">vehicle_index</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+    <div class="fixed">
+        <p>您还未登录，请登录！</p>
+    <a href="{% url 'user:login' %}">去登录<span class="glyphicon glyphicon-log-in"></span></a>
+    </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer>
+        <a href="{% url 'user:home' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-th-large"></span>
+                </dt>
+                <dd>首页</dd>
+            </dl>
+        </a>
+         <a href="{% url 'vehicle:index' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-road"></span>
+                </dt>
+                <dd>车辆</dd>
+            </dl>
+        </a>
+        <a href="{% url 'user:mine' %}">
+            <dl>
+                <dt>
+                    <span class="glyphicon glyphicon-home"></span>
+                </dt>
+                <dd>我的</dd>
+            </dl>
+        </a>
+    </footer>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'main/vehicle_index.html' %}
+
+{% load static %}
+
+{% block ext_css %}
+    {{ block.super }}
+{% endblock %}
+
+{% block ext_js %}
+    {{ block.super }}
+{% endblock %}
+
+{% block header %}
+    <header>
+        <p>毕业设计--更新车辆</p>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:index' %}">vehicle_index</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:search' %}">search</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'vehicle:update' %}">update</a></li>
+        </ul>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'vehicle:update' %}" method="post" enctype="multipart/form-data">
+        <table border="1" class="table table-hover">
+            <tr>
+                <td><label for="plate_input">车牌号：</label></td>
+                <td>{{ plate.p_plate }}</td>
+            </tr>
+            <tr>
+                <td><label>道路名：</label></td>
+                <td>
+                    <select name="road">
+                        {% for road in roads %}
+                            {% ifequal plate.p_roads.r_name road.r_name %}
+                                <option selected>{{ road.r_name }}</option>
+                            {% else %}
+                                <option>{{ road.r_name }}</option>
+                            {% endifequal %}
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="date">通行时间：</label></td>
+                <td><input name="date" id="date" type="datetime-local"></td>
+            </tr>
+            <tr>
+                <td><label for="against_input">是否违规：</label></td>
+                <td>
+                    <label><input type="radio" name="against" value="T">违规</label>
+                    <label><input type="radio" name="against" value="F">未违规</label>
+                </td>
+            </tr>
+        </table>
+        <div align="center">
+            <button type="submit" class="btn btn-danger btn-lg">保存</button>
+            <button onclick="javascript:history.go(-1);" type="reset" class="btn btn-default btn-lg">取消</button>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}
